@@ -5,7 +5,7 @@ CC = gcc
 CCFLAGS = -Wall
 
 # files to be included
-FILES = main.c msh.c linked_list.c
+FILES = src/main.c src/msh.c src/linked_list.c
 
 all:
 	${CC} ${CCFLAGS} ${FILES} -o msh
