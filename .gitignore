@@ -1,0 +1,5 @@
+*.out
+*.dYSM
+/test
+.vscode
+*.txt
