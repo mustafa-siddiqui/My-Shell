@@ -1,5 +1,7 @@
 *.out
-*.dYSM
+*.out.dYSM
 /test
 .vscode
 *.txt
+msh
+msh-d
