@@ -18,13 +18,16 @@
     => better to redirect to a file if the code file includes other files
 */
 
-// => CHECK IF WORKING OR NOT <=
-#define _TYPE_CHECK(ptr1, ptr2) \
-    do { \
-        if (!__builtin_types_compatible_p(typeof(*(ptr1)), typeof(*(ptr2)))) { \
-            fprintf(stderr, "Comparison with incompatible types at line %d in function %s()\n", __LINE__, __FUNCTION__); \
-            exit(EXIT_FAILURE); \
-        } \
+/*
+    Check if two pointers are of the same type or not. If they are not, they
+    cannot be compared by dereferencing using the macro _ACCESS_VALUE.
+*/
+#define _TYPE_CHECK(ptr1, ptr2)                                                                                             \
+    do {                                                                                                                    \
+        if (!__builtin_types_compatible_p(typeof(*(ptr1)), typeof(*(ptr2)))) {                                              \
+            fprintf(stderr, "Comparison with incompatible types at line %d in function %s()\n", __LINE__, __FUNCTION__);    \
+            exit(EXIT_FAILURE);                                                                                             \
+        }                                                                                                                   \
     } while (0)
 
 /*
@@ -32,7 +35,10 @@
 */
 #define _ALLOC_MEM(type) (type*) malloc(sizeof(type))
 
-#define _ASSIGN(val, type) (type*) val
+/*
+    => check if this is useful or not! <=
+*/
+#define _ASSIGN(val, type) (type*)val
 
 /*
     Access value from void pointer by making use of typecasting.
@@ -51,7 +57,8 @@
 
 /*
     Data types available to store as data in the linked list.
-    => structs are not supported as of now <=
+    => structs are not supported as of now (each struct will require explicit
+    support with current implementation) <=
 */
 enum {
     INTEGER,

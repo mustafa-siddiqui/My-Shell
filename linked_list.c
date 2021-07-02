@@ -90,11 +90,6 @@ Node* createNode(DATA_TYPES dataType, void* val) {
 Node* append(Node* head, void* value) {
     // exit if data of different types
     _TYPE_CHECK(head->value, value);
-    /*
-    if (!__builtin_types_compatible_p(typeof(*head->value), typeof(*value))) {
-        fprintf(stderr, "Comparison with incompatible types at line %d in function %s()\n", __LINE__, __FUNCTION__);
-        exit(EXIT_FAILURE);
-    } */
 
     DATA_TYPES dataType = head->dataType;
 
@@ -163,11 +158,11 @@ Node* insertBefore(Node* head, void* valueAfterInsert, void* insertValue) {
     int notEqual = 1;
     while (notEqual) {
         notEqual = compare(currentNode->value, valueAfterInsert, currentNode->dataType);
-
+        
         // break so to not change the current node
         if (!notEqual)
             break;
-        
+
         previousNode = currentNode;
         currentNode = currentNode->next;
 
@@ -184,7 +179,7 @@ Node* insertBefore(Node* head, void* valueAfterInsert, void* insertValue) {
 
     // if value is to be inserted before head
     // currentNode will be the same as head in this case
-    int updateHead = compare(head->value, valueAfterInsert, head->dataType);
+    int updateHead = compare(head->value, insertValue, head->dataType);
     if (updateHead) {
         head = insertNode;
     }
@@ -192,7 +187,6 @@ Node* insertBefore(Node* head, void* valueAfterInsert, void* insertValue) {
         // make node before search value node point to node to be inserted (which points to the next node)
         // previousNode will not be NULL since have iterated over list
         previousNode->next = insertNode;
-        // => segmentation fault occurs at this line when executing <= ** NEED TO RESOLVE **
     }
 
     return head;

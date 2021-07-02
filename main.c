@@ -30,6 +30,7 @@ int main(void) {
         *val = i + 1;
         head = append(head, val);
     }
+    printf("Initial print list\n");
     printList(head);
 
     // insert '99' into list after the value '5'
@@ -37,12 +38,11 @@ int main(void) {
     *val1 = 5;
     int* val2 = (int*) malloc(sizeof(int));
     *val2 = 99;
-    printf("Insert after\n");
+    printf("Insert %d after %d\n", *val2, *val1);
     insertAfter(head, val1, val2);
     printList(head);
-    printf("Completed");
 
-    // insert '101' into list before the value '99'
+    // insert '101' into list before the value '1'
     int* val3 = (int*) malloc(sizeof(int));
     assert(val3);
     *val3 = 1;
@@ -50,7 +50,7 @@ int main(void) {
     assert(val4);
     *val4 = 101;
     head = insertBefore(head, val3, val4);
-    printf("Insert before\n");
+    printf("Insert %d before %d\n", *val4, *val3);
     printList(head);
 
     // delete '99' from the list
@@ -60,9 +60,16 @@ int main(void) {
     printf("Print after delete\n");
     printList(head);
 
-    freeList(head);
+    // search '5' in the list
+    int* val6 = _ALLOC_MEM(int);
+    *val6 = 87;
+    i = 0;
+    if ((i = search(head, val6)) != -1)
+        printf("87 found at %d\n", i);
+    else
+        printf("87 not in list\n");
 
-    free(num);
+    freeList(head);
 
     return 0;
 }
