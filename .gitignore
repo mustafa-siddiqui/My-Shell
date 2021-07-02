@@ -1,5 +1,5 @@
 *.out
-*.out.dYSM
+/a.out.dYSM
 /test
 .vscode
 *.txt
