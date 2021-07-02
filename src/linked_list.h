@@ -36,7 +36,7 @@
 #define _ALLOC_MEM(type) (type*) malloc(sizeof(type))
 
 /*
-    => check if this is useful or not! <=
+    Assign one pointer to another.
 */
 #define _ASSIGN(val, type) (type*)val
 

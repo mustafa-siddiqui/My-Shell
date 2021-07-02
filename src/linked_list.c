@@ -156,13 +156,15 @@ Node* insertBefore(Node* head, void* valueAfterInsert, void* insertValue) {
     
     // iterate over loop until value reached
     int notEqual = 1;
+    int updateHead = 0;
     while (notEqual) {
         notEqual = compare(currentNode->value, valueAfterInsert, currentNode->dataType);
         
         // break so to not change the current node
         if (!notEqual)
             break;
-
+        
+        updateHead++;
         previousNode = currentNode;
         currentNode = currentNode->next;
 
@@ -179,8 +181,7 @@ Node* insertBefore(Node* head, void* valueAfterInsert, void* insertValue) {
 
     // if value is to be inserted before head
     // currentNode will be the same as head in this case
-    int updateHead = compare(head->value, insertValue, head->dataType);
-    if (updateHead) {
+    if (updateHead == 0) {
         head = insertNode;
     }
     else {
@@ -260,11 +261,8 @@ void printList(Node* head) {
     // iterate over list and print values
     while (currentNode != NULL) {
         printListElem(currentNode->value, head->dataType);
-
         currentNode = currentNode->next;
-        printf("Iterating over\t");     // debug statement
     }
-    printf("printing new line\n");      // debug statement
     putchar('\n');
 }
 
@@ -292,8 +290,9 @@ void freeList(Node* head) {
         previousNode = currentNode;
         currentNode = currentNode->next;
 
-        printf("Freeing %d\n", *((int*)previousNode->value));   // debug statement
         free(previousNode->value);
         free(previousNode);
     }
+
+    printf("List freed.\n");
 }
