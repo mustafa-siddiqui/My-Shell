@@ -34,4 +34,36 @@ char* readLine(void);
 */
 char** parseLine(char* line);
 
+/*
+    Start a shell process by first duplicating an existing process (fork()) &
+    then replacing it (execvp()).
+    Returns 1 to signal process creation process has finished.
+    => Any errors will be printed to stderr <=
+*/
+int launchProcess(char** tokens);
+
+/*
+    Returns the number of supported shell built-in commands.
+*/
+int numBuiltIns(char* builtins[]);
+
+/*
+    => Built-in shell commands (not their own processes) below <=
+*/
+
+/*
+    Change directories - the 'cd' command.
+*/
+int cd(char** tokens);
+
+/*
+    Displays some detail about built-in shell commands.
+*/
+int help(char** tokens);
+
+/*
+    Exit the shell.
+*/
+int exitShell(char** tokens);
+
 #endif  /* _MY_SHELL_H_ */

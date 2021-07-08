@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>  // pid_t
+#include <unistd.h>     // fork()
 // -- //
 #include "msh.h"
 
@@ -89,4 +91,91 @@ char** parseLine(char* line) {
     // store last token as NULL
     tokens[i] = NULL;
     return tokens;
+}
+
+/* start a shell process */
+int launchProcess(char** tokens) {
+    pid_t pid, wait_pid = 0;
+    int status = 0;
+
+    // =0 -> returned to created child process
+    // >0 -> returned to parent process
+    // <0 -> creation of child unsuccessful
+    pid = fork();
+    if (pid < 0) {
+        fprintf(stderr, "Process creation failed.\n");
+    }
+    else if (pid == 0) {
+        if (execvp(tokens[0], tokens) == -1)
+            fprintf(stderr, "Failed to replace process image with new one.\n");
+        exit(EXIT_FAILURE);
+    }
+    else {
+        // wait till the process has exited or is killed by some signal
+        do {
+            wait_pid = waitpid(pid, &status, WUNTRACED);
+        } while (!WIFEXITED(status) && !WIFSIGNALED(status));
+    }
+
+    return 1;
+}
+
+/* number of shell built-in commands */
+int numBuiltIns(char* builtins[]) {
+    return (sizeof(builtins) / sizeof(char*));
+    // OR (maybe)
+    /*
+    int i = 0;
+    while (*builtins[i] != NULL) {
+        i++;
+    }
+    return i;
+    */
+}
+
+/* string array of built-in shell command names */
+char* builtIns[] = {
+    "cd",
+    "help",
+    "exit"
+};
+
+/* array of built-in command functions using fn pointers */
+int (*builtInFuncs[]) (char**) = {
+    &cd,
+    &help,
+    &exitShell
+};
+
+/* change directory */
+int cd(char** tokens) {
+    if (tokens[1] == NULL) {
+        fprintf(stderr, "Need location to change current directory to.\n");
+        return -1;
+    }
+
+    // chdir() returns 0 on successful completion
+    if (chdir(tokens[1]) != 0) {
+        fprintf(stderr, "Error changing directory.\n");
+        return -1;
+    }
+    
+    return 1;
+}
+
+/* display info and built-in commands */
+int help(char** tokens) {
+    printf("Welcome to MyShell Help Page:\n");
+    printf("Following commands are builtin:\n");
+    for (int i = 0; i < numBuiltIns(builtIns); i++) {
+        printf("%s\n", builtIns[i]);
+    }
+
+    printf("Use the man command for information on other programs.\n");
+    return 1;
+}
+
+/* exit shell */
+int exitShell(char** tokens) {
+    return EXIT_SUCCESS;
 }
