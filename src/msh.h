@@ -1,5 +1,5 @@
 /**
- *  @file   my_shell.h
+ *  @file   msh.h
  *  @brief  Declarations of macros and functions used by the
  *          shell program.
  *  @author Mustafa Siddiqui
@@ -13,6 +13,9 @@
 #define BUFFER_LEN          (25)
 #define NUM_ARGS            (3)
 #define WHITESPACE_DELIM    (" \t\r\n\a")
+
+extern char* builtIns[];
+extern int (*builtInFuncs[]) (char**);
 
 /*
     Checks if memory allocation was successful or not.
@@ -41,6 +44,18 @@ char** parseLine(char* line);
     => Any errors will be printed to stderr <=
 */
 int launchProcess(char** tokens);
+
+/*
+    Function that calls other functions to read the shell input, parse it, and
+    execute the command until an exit signal or error.
+*/
+void mshLoop(void);
+
+/*
+    Check if argument is a built-in shell command or another process and
+    launch it accordingly.
+*/
+int executeCommand(char** tokens);
 
 /*
     Returns the number of supported shell built-in commands.

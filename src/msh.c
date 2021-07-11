@@ -1,5 +1,5 @@
 /**
- *  @file   my_shell.c
+ *  @file   msh.c
  *  @brief  Definitions of functions declared in msh.h and
  *          are used by the shell program.
  *  @author Mustafa Siddiqui
@@ -9,8 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/types.h>  // pid_t
-#include <unistd.h>     // fork()
+#include <unistd.h>     // fork(), execvp(), chdir(), pid_t
 // -- //
 #include "msh.h"
 
@@ -120,17 +119,34 @@ int launchProcess(char** tokens) {
     return 1;
 }
 
+/* execute built-in shell command or process */
+int executeCommand(char** tokens) {
+    // return if the user entered no command
+    if (tokens[0] == NULL)
+        return 1;
+    
+    // run built-in shell command if command matches any
+    for (int i = 0; i < numBuiltIns(builtIns); i++) {
+        if (strcmp(builtIns[i], tokens[0]) == 0)
+            return ((*builtInFuncs[i])(tokens));
+    }
+
+    return launchProcess(tokens);
+}
+
+/* main shell loop */
+void mshLoop(void) {
+    int status = 0;
+
+    do {
+        printf("msh -> ");
+        status = executeCommand(parseLine(readLine()));
+    } while (status);
+}
+
 /* number of shell built-in commands */
 int numBuiltIns(char* builtins[]) {
     return (sizeof(builtins) / sizeof(char*));
-    // OR (maybe)
-    /*
-    int i = 0;
-    while (*builtins[i] != NULL) {
-        i++;
-    }
-    return i;
-    */
 }
 
 /* string array of built-in shell command names */
