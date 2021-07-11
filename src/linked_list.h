@@ -31,7 +31,7 @@
     } while (0)
 
 /*
-    Allocate memory for some specified data type;
+    Allocate memory for some specified data type.
 */
 #define _ALLOC_MEM(type) (type*) malloc(sizeof(type))
 
@@ -78,6 +78,10 @@ struct linkedListNode {
     struct linkedListNode* next;
 } typedef Node;
 
+/*
+    Compare data pointed by two void pointers depending on the data
+    type specified.
+*/
 static inline int compare(void* ptr1, void* ptr2, DATA_TYPES dataType);
 
 /*
