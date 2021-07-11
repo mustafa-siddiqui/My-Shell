@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 // -- //
-#include "linked_list.h"
+#include <src/linked_list.h>
 
 /* Compare data pointed to by two void pointers as per the specified data type */
 int compare(void* ptr1, void* ptr2, DATA_TYPES dataType) {
