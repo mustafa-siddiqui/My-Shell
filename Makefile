@@ -19,7 +19,7 @@ clean:
 	rm -rf msh
 
 debug:
-	${CC} ${CCFLAGS} ${FILES} -g -o msh-d
+	${CC} ${CCFLAGS} ${INC} ${FILES} -g -o msh-d
 
 Debug-clean:
 	rm -rf msh-d
