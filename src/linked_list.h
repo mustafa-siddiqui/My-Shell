@@ -139,4 +139,14 @@ void printListReverse(Node* head);
 */
 void freeList(Node* head);
 
+/*
+    Helpful macro to declare and set value for variable given
+    the datatype. ** uses pointers, not basic variables **
+    => requires assert.h to check memory allocation <=
+    
+#define SET(val, var, type) type* var = _ALLOC_MEM(type);   \
+                            assert(var);                    \
+                            *var = val
+*/
+
 #endif  /* _LINKED_LIST_H_ */
