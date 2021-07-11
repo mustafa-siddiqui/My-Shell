@@ -126,7 +126,7 @@ int executeCommand(char** tokens) {
         return 1;
     
     // run built-in shell command if command matches any
-    for (int i = 0; i < numBuiltIns(builtIns); i++) {
+    for (int i = 0; i < numBuiltIns(); i++) {
         if (strcmp(builtIns[i], tokens[0]) == 0)
             return ((*builtInFuncs[i])(tokens));
     }
@@ -144,11 +144,6 @@ void mshLoop(void) {
     } while (status);
 }
 
-/* number of shell built-in commands */
-int numBuiltIns(char* builtins[]) {
-    return (sizeof(builtins) / sizeof(char*));
-}
-
 /* string array of built-in shell command names */
 char* builtIns[] = {
     "cd",
@@ -162,6 +157,11 @@ int (*builtInFuncs[]) (char**) = {
     &help,
     &exitShell
 };
+
+/* number of shell built-in commands */
+int numBuiltIns() {
+    return (sizeof(builtIns) / sizeof(char*));
+}
 
 /* change directory */
 int cd(char** tokens) {
@@ -183,8 +183,8 @@ int cd(char** tokens) {
 int help(char** tokens) {
     printf("Welcome to MyShell Help Page:\n");
     printf("Following commands are builtin:\n");
-    for (int i = 0; i < numBuiltIns(builtIns); i++) {
-        printf("%s\n", builtIns[i]);
+    for (int i = 0; i < numBuiltIns(); i++) {
+        printf("%d. %s\n", i + 1, builtIns[i]);
     }
 
     printf("Use the man command for information on other programs.\n");

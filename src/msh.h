@@ -60,7 +60,7 @@ int executeCommand(char** tokens);
 /*
     Returns the number of supported shell built-in commands.
 */
-int numBuiltIns(char* builtins[]);
+int numBuiltIns(void);
 
 /*
     => Built-in shell commands (not their own processes) below <=
