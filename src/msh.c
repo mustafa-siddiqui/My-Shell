@@ -11,7 +11,7 @@
 #include <string.h>
 #include <unistd.h>     // fork(), execvp(), chdir(), pid_t
 // -- //
-#include <src/msh.h>
+#include <inc/msh.h>
 
 /* check for NULL */
 int memAllocCheck(void* ptr) {

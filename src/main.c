@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <assert.h>
 // -- //
-#include <src/msh.h>
+#include <inc/msh.h>
 
 int main(void) {
     // run shell loop
