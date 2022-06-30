@@ -1,5 +1,5 @@
 # My-Shell
-A simple, basic shell.
+A simple, basic shell; created as a learning project.
 
 #### Notes:  
 * Currently supports three built-in commands:  
